@@ -1,0 +1,21 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:app1": "cd ./packages/app1 && pnpm run build:dev",
+    "start:app2": "cd ./packages/app2 && pnpm run build:dev",
+    "start": "concurrently \"pnpm run start:app1\" \"pnpm run start:app2\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^7.6.0",
+    "html-webpack-plugin": "^5.5.0",
+    "http-server": "^14.1.1",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
+  }
+}
