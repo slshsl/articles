@@ -29,7 +29,8 @@ if ("serviceWorker" in navigator) {
 ```
 
 在上面代码中`navigator.serviceWorker`是一个`ServiceWorkerContainer`的实例，可以简单理解为`serviceWorker`的容器或者工厂，以下用`swC`来表示它的实例。
-&emsp;&emsp;通过`swC`的`register`方法注册一个`ServiceWorker`,该方法返回一个`promise`,该`promise resolve`的返回值是一个`ServiceWorkerRegistration`的实例，对应上面代码中的`registration`，以下就用`swR`来表示`ServiceWorkerRegistration`的实例。
+
+通过`swC`的`register`方法注册一个`ServiceWorker`,该方法返回一个`promise`,该`promise resolve`的返回值是一个`ServiceWorkerRegistration`的实例，对应上面代码中的`registration`，以下就用`swR`来表示`ServiceWorkerRegistration`的实例。
 `ServiceWorker`是一个继承[EventTarget](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget)的类。以下用`sw`来表示它的实例。我们可以从`swC.controller`（当前页面激活的 sw）或者`swR.installing`、`swR.waiting`、`swR.activate`来获得处于不同状态的`sw`。
 
 # 注册过程
@@ -39,6 +40,7 @@ if ("serviceWorker" in navigator) {
 - `installing`：正在安装
 - `installed`：安装完成
 - `activated`：已激活
+
   当第一次注册的过程中会触发 `swR`的`updatefound`事件，在该事件中，我们可以从`swR.installing`拿到正在安装的`sw`（该`sw`此时状态为`installing`）并注册该`sw`的`stateChange`事件；此时`swR.waiting`、`swR.activate`都为`null`；观察`sw`状态最后变为`activated`（先暂时不描述状态变化的详细过程），此时`swR.installing`、`swR.waiting`都为`null`,`swR.activate`为我们之拿到的`sw`。
   **概述来讲，注册的`sw`会随着它的状态的变化，不断的在`swR`的`installing`、`waiting`、`activate`这三个属性中擦肩而过；当`sw.state`为`installing`时，它跑到了`swR.installing`这里，当`sw.state`为`installed`时，它跑到了`swR.waiting`那里，当`sw.state`为`activated`时，停在了`swR.activate`；就像一个调皮的孩子玩累了回到了家。这时该`sw`已经控制了后续的事件。**
   
