@@ -9,7 +9,7 @@
 本段主要通过注册`ServiceWorker`来引出`ServiceWorkerContainer`、`ServiceWorkerRegistration`、`ServiceWorker`这 3 个接口。
 假如通过一个`register.js`文件来注册`ServiceWorker`，代码如下（下面的代码主要是为了更好的观察`serviceWorker`的状态变化）：
 
-```javascript .line-numbers
+```javascript {.line-numbers}
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("./sw.js").then((registration) => {
     registration.addEventListener("updatefound", () => {
@@ -49,7 +49,7 @@ if ("serviceWorker" in navigator) {
 
 > 在 MDN web 官网上描述[Registering your worker](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers#registering_your_worker)的部分是我想写这篇文章的原因，当我看到它的示例代码时，代码如下：
 
-```javascript .line-numbers
+```javascript {.line-numbers}
 const registerServiceWorker = async () => {
   if ("serviceWorker" in navigator) {
     try {
@@ -74,7 +74,7 @@ registerServiceWorker();
 
 上面的代码容易让人觉得这三个属性的值不会同时存在，也许官网以此例子来讲解`sw`的状态变化；至于如何注册`sw`，在 MDN web 官网上描述[ServiceWorkerContainer](<https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerContainer#:~:text=if%20(%22serviceWorker,)%3B%0A%7D>)中给出的注册`sw`更为合适,代码如下：
 
-```javascript .line-numbers
+```javascript {.line-numbers}
 if ("serviceWorker" in navigator) {
   // Register a service worker hosted at the root of the
   // site using the default scope.
@@ -149,7 +149,7 @@ if ("serviceWorker" in navigator) {
   > [The install event is the first event a service worker gets, and it only happens once.](https://web.dev/service-worker-lifecycle/#:~:text=The%20install%20event%20is%20the%20first%20event%20a%20service%20worker%20gets%2C%20and%20it%20only%20happens%20once.)
   > 一般来处理预加载哪些资源缓存到`cache storage`中；也可以在该回调内执行`self.skipWaiting()`使其跳过`waiting`状态。
 
-  ```javascript .line-numbers
+  ```javascript {.line-numbers}
   self.addEventListener("install", function (event) {
     self.skipWaiting();
     event.waitUntil(
@@ -163,7 +163,7 @@ if ("serviceWorker" in navigator) {
 - `activate`：此时`sw`状态处于`activating`。  
   一般来清理旧版本`sw`缓存的资源，也可以在该回调内执行`clients.claim()`使其不刷新页面就可以接管页面（此处可能会有一些问题，暂不展开）。
 
-  ```javascript .line-numbers
+  ```javascript {.line-numbers}
   self.addEventListener("activate", function (event) {
     event.waitUntil(
       caches.keys().then((keys) => {
@@ -187,7 +187,7 @@ if ("serviceWorker" in navigator) {
 - `fetch`：此时`sw`状态处于`activated`。
   监听请求事件，有多种策略可以选择，这里不作过多的描述。
 
-  ```javascript .line-numbers
+  ```javascript {.line-numbers}
   self.addEventListener("fetch", (event) => {
     event.respondWith(
       caches.match(event.request).then((response) => {
@@ -215,7 +215,7 @@ if ("serviceWorker" in navigator) {
 
 - `register.js`：采用通知用户有新数据更新，将是否更新交给用户来决定
 
-  ```javascript .line-numbers
+  ```javascript {.line-numbers}
   if ("serviceWorker" in navigator) {
     // 数据有更新，需要通知用户，来触发skipWaiting
     function postSkipWaiting(curWaitingWorker) {
@@ -286,7 +286,7 @@ if ("serviceWorker" in navigator) {
 
 - `sw.js`：采用了无刷新接管页面
 
-  ```javascript .line-numbers
+  ```javascript {.line-numbers}
   // 一般来处理预加载哪些请求的资源作为缓存到 cache storage 中
   self.addEventListener("install", function (event) {
     // 以下可自行添加预加载资源代码
@@ -314,7 +314,7 @@ if ("serviceWorker" in navigator) {
 
   如果采用刷新页面的方式来接管页面，先删除`sw.js`里注册的`activate`事件中的`event.waitUntil(clients.claim())`这句代码；然后在`register.js`中添加给`swC`注册`controllerchange`事件的代码，如下：
 
-  ```javascript .line-numbers
+  ```javascript {.line-numbers}
   navigator.serviceWorker.addEventListener("controllerchange", () => {
     window.location.reload();
   });
