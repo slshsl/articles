@@ -1,0 +1,21 @@
+{
+  "name": "webpack-plugin",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node --inspect-brk ./node_modules/webpack/bin/webpack.js",
+    "test": "webpack"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^18.14.2",
+    "globby": "^11.0.1",
+    "schema-utils": "^4.0.0",
+    "tapable": "^2.2.1",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
+  }
+}
