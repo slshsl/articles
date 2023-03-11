@@ -9,12 +9,14 @@
 本段主要通过注册`ServiceWorker`来引出`ServiceWorkerContainer`、`ServiceWorkerRegistration`、`ServiceWorker`这 3 个接口。
 假如通过一个`register.js`文件来注册`ServiceWorker`，代码如下（下面的代码主要是为了更好的观察`serviceWorker`的状态变化）：
 
-```
+```javascript .line-numbers
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("./sw.js").then((registration) => {
     registration.addEventListener("updatefound", () => {
       let curUpdateWorker = registration.installing;
-      console.log(`当前更新的serviceWorker目前的状态为${curUpdateWorker.state}`);
+      console.log(
+        `当前更新的serviceWorker目前的状态为${curUpdateWorker.state}`
+      );
       curUpdateWorker.addEventListener("statechange", (e) => {
         console.log(`当前更新的serviceWorker目前的状态变更为${e.target.state}`);
         if (e.target.state === "actived") {
@@ -42,35 +44,37 @@ if ("serviceWorker" in navigator) {
 - `activated`：已激活
 
   当第一次注册的过程中会触发 `swR`的`updatefound`事件，在该事件中，我们可以从`swR.installing`拿到正在安装的`sw`（该`sw`此时状态为`installing`）并注册该`sw`的`stateChange`事件；此时`swR.waiting`、`swR.activate`都为`null`；观察`sw`状态最后变为`activated`（先暂时不描述状态变化的详细过程），此时`swR.installing`、`swR.waiting`都为`null`,`swR.activate`为我们之拿到的`sw`。
+
   **概述来讲，注册的`sw`会随着它的状态的变化，不断的在`swR`的`installing`、`waiting`、`activate`这三个属性中擦肩而过；当`sw.state`为`installing`时，它跑到了`swR.installing`这里，当`sw.state`为`installed`时，它跑到了`swR.waiting`那里，当`sw.state`为`activated`时，停在了`swR.activate`；就像一个调皮的孩子玩累了回到了家。这时该`sw`已经控制了后续的事件。**
-  
+
 > 在 MDN web 官网上描述[Registering your worker](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers#registering_your_worker)的部分是我想写这篇文章的原因，当我看到它的示例代码时，代码如下：
-```
-    const registerServiceWorker = async () => {
-      if ("serviceWorker" in navigator) {
-        try {
-          const registration = await navigator.serviceWorker.register("/sw.js", {
-            scope: "/",
-          });
-          if (registration.installing) {
-            console.log("Service worker installing");
-          } else if (registration.waiting) {
-            console.log("Service worker installed");
-          } else if (registration.active) {
-            console.log("Service worker active");
-          }
-        } catch (error) {
-          console.error(`Registration failed with ${error}`);
-        }
+
+```javascript .line-numbers
+const registerServiceWorker = async () => {
+  if ("serviceWorker" in navigator) {
+    try {
+      const registration = await navigator.serviceWorker.register("/sw.js", {
+        scope: "/",
+      });
+      if (registration.installing) {
+        console.log("Service worker installing");
+      } else if (registration.waiting) {
+        console.log("Service worker installed");
+      } else if (registration.active) {
+        console.log("Service worker active");
       }
-    };
-    // …
-    registerServiceWorker();
+    } catch (error) {
+      console.error(`Registration failed with ${error}`);
+    }
+  }
+};
+// …
+registerServiceWorker();
 ```
 
 上面的代码容易让人觉得这三个属性的值不会同时存在，也许官网以此例子来讲解`sw`的状态变化；至于如何注册`sw`，在 MDN web 官网上描述[ServiceWorkerContainer](<https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerContainer#:~:text=if%20(%22serviceWorker,)%3B%0A%7D>)中给出的注册`sw`更为合适,代码如下：
 
-```
+```javascript .line-numbers
 if ("serviceWorker" in navigator) {
   // Register a service worker hosted at the root of the
   // site using the default scope.
@@ -130,6 +134,7 @@ if ("serviceWorker" in navigator) {
 
   > [The service worker in this state is considered a waiting worker.](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorker/state#:~:text=The%20service%20worker%20in%20this%20state%20is%20considered%20a%20waiting%20worker.)
   > 这里需要强调一下，网上看了许多`PWA`的文章，主要描述`sw`在安装成功后一直处于`waiting`状态，这里就比较模糊，需要特殊说明一下，这个`waiting`状态实际上是`installed`状态。之所以也可以称为`waiting`状态，是因为`swR`中用`waiting`属性会保存`installed`状态的`sw`的引用。这也是我写这篇文章的另一个原因，网上大部分的文章都提到`sw`会有可能一直处于`waiting`的状态，这是为什么呢？[官网上给出的状态没有这个 waiting 状态](https://developer.mozilla.org/zh-CN/docs/Web/API/ServiceWorker/state#:~:text=ServiceWorker%20%E6%8E%A5%E5%8F%A3%E7%9A%84%E8%BF%99%E4%B8%AA%E5%8F%AA%E8%AF%BB%E7%9A%84state%E5%B1%9E%E6%80%A7%E8%BF%94%E5%9B%9E%E4%B8%80%E4%B8%AA%E4%BB%A3%E8%A1%A8%20service%20worker%20%E5%BD%93%E5%89%8D%E7%8A%B6%E6%80%81%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E3%80%82%E5%80%BC%E5%8F%AF%E4%BB%A5%E6%98%AF%E4%BB%A5%E4%B8%8B%E8%BF%99%E4%BA%9B%EF%BC%9Ainstalling%2C%20installed%2C%20activating%2C%20activated%EF%BC%8C%E6%88%96%E8%80%85%E6%98%AF%20redundant.)，所以仔细阅读了官网，给出了上面的解释，希望能帮到同样困惑的小伙伴。
+
 - `activating`：表示该`sw`正在激活中
 - `activated`：该状态表示当前`sw`已经准备好接管事件（`fetch`等）
 - `redundant`：表示该`sw`已被丢弃。发生的场景一般有三个：
@@ -143,7 +148,8 @@ if ("serviceWorker" in navigator) {
 
   > [The install event is the first event a service worker gets, and it only happens once.](https://web.dev/service-worker-lifecycle/#:~:text=The%20install%20event%20is%20the%20first%20event%20a%20service%20worker%20gets%2C%20and%20it%20only%20happens%20once.)
   > 一般来处理预加载哪些资源缓存到`cache storage`中；也可以在该回调内执行`self.skipWaiting()`使其跳过`waiting`状态。
-  ```
+
+  ```javascript .line-numbers
   self.addEventListener("install", function (event) {
     self.skipWaiting();
     event.waitUntil(
@@ -153,9 +159,11 @@ if ("serviceWorker" in navigator) {
     );
   });
   ```
+
 - `activate`：此时`sw`状态处于`activating`。  
   一般来清理旧版本`sw`缓存的资源，也可以在该回调内执行`clients.claim()`使其不刷新页面就可以接管页面（此处可能会有一些问题，暂不展开）。
-  ```
+
+  ```javascript .line-numbers
   self.addEventListener("activate", function (event) {
     event.waitUntil(
       caches.keys().then((keys) => {
@@ -175,9 +183,11 @@ if ("serviceWorker" in navigator) {
     event.waitUntil(clients.claim());
   });
   ```
+
 - `fetch`：此时`sw`状态处于`activated`。
   监听请求事件，有多种策略可以选择，这里不作过多的描述。
-  ```
+
+  ```javascript .line-numbers
   self.addEventListener("fetch", (event) => {
     event.respondWith(
       caches.match(event.request).then((response) => {
@@ -205,7 +215,7 @@ if ("serviceWorker" in navigator) {
 
 - `register.js`：采用通知用户有新数据更新，将是否更新交给用户来决定
 
-  ```
+  ```javascript .line-numbers
   if ("serviceWorker" in navigator) {
     // 数据有更新，需要通知用户，来触发skipWaiting
     function postSkipWaiting(curWaitingWorker) {
@@ -237,18 +247,23 @@ if ("serviceWorker" in navigator) {
         curActiveWorker = registration.active;
         // 上次更新，已安装完成，处于installed状态，一直等待激活的serviceWorker
         curWaitingWorker = registration.waiting;
-        console.log(`当前更新的serviceWorker目前的状态为${curUpdateWorker.state}`);
+        console.log(
+          `当前更新的serviceWorker目前的状态为${curUpdateWorker.state}`
+        );
         if (curWaitingWorker && curWaitingWorker !== curUpdateWorker) {
           curWaitingWorker.addEventListener("statechange", (e) => {
             // 当前安装新的serviceWorker时,如果存在上次更新未最后激活的而一直处于waiting状态的serviceWoker
             // 那么这个之前处于waiting状态的serviceWoker应该被标记为多余状态redundant
-            console.log(`上次更新未最后激活的而一直处于waiting状态的serviceWoker被标记为${e.target.state}`
+            console.log(
+              `上次更新未最后激活的而一直处于waiting状态的serviceWoker被标记为${e.target.state}`
             );
           });
         }
         curUpdateWorker.addEventListener("statechange", (e) => {
           // 监听状态改变
-          console.log(`当前更新的serviceWorker目前的状态变更为${e.target.state}`);
+          console.log(
+            `当前更新的serviceWorker目前的状态变更为${e.target.state}`
+          );
           // 当前存在活跃的serviceWorker，当前更新的serviceWorker已安装完毕处于installed,可以提示用户更新
           if (
             curActiveWorker &&
@@ -270,43 +285,46 @@ if ("serviceWorker" in navigator) {
   ```
 
 - `sw.js`：采用了无刷新接管页面
-  ````
+
+  ```javascript .line-numbers
   // 一般来处理预加载哪些请求的资源作为缓存到 cache storage 中
   self.addEventListener("install", function (event) {
-  // 以下可自行添加预加载资源代码
-  // .......
+    // 以下可自行添加预加载资源代码
+    // .......
   });
   // 在对应回调中一般来清理旧版本 serverWorker 缓存的资源
   self.addEventListener("activate", function (event) {
-  // 以下可自行添加清理旧版本资源代码
-  // .......
-  // 无刷新接管页面
-  event.waitUntil(clients.claim());
+    // 以下可自行添加清理旧版本资源代码
+    // .......
+    // 无刷新接管页面
+    event.waitUntil(clients.claim());
   });
-   // 当前有新的 serviceWork 正处在 handled 状态，一直在等待更新，需要接受用户的通知来决定是否跳过等待
+  // 当前有新的 serviceWork 正处在 handled 状态，一直在等待更新，需要接受用户的通知来决定是否跳过等待
   self.addEventListener("message", (event) => {
-  if (event.data === "skipWaiting") {
-  self.skipWaiting();
-  }
+    if (event.data === "skipWaiting") {
+      self.skipWaiting();
+    }
   });
   // 监听请求事件
   self.addEventListener("fetch", (event) => {
-  // 以下可自行添加缓存策略相关代码
-  // .......
-      });
-      ```
-      如果采用刷新页面的方式来接管页面，先删除`sw.js`里注册的`activate`事件中的`event.waitUntil(clients.claim())`这句代码；然后在`register.js`中添加给`swC`注册`controllerchange`事件的代码，如下：
-      ```
-      navigator.serviceWorker.addEventListener("controllerchange", () => {
-        window.location.reload();
-      });
-      ```
+    // 以下可自行添加缓存策略相关代码
+    // .......
+  });
+  ```
+
+  如果采用刷新页面的方式来接管页面，先删除`sw.js`里注册的`activate`事件中的`event.waitUntil(clients.claim())`这句代码；然后在`register.js`中添加给`swC`注册`controllerchange`事件的代码，如下：
+
+  ```javascript .line-numbers
+  navigator.serviceWorker.addEventListener("controllerchange", () => {
+    window.location.reload();
+  });
+  ```
+
   以上代码主要是为了观察`sw`的状态变化。
-  ````
 
 # 总结
 
-&emsp;&emsp;大体描述了`sw`生命周期中的事件及其状态的变化，里面没有讲到`self.skipWaiting()`，`clients.claim()`详细的使用方式；没有讲到为什么要使用`waitUntil`;也没有讲到`Cache Storage`；后续有时间会再写篇文章单独讲解，欢迎大家留言指正。
+大体描述了`sw`生命周期中的事件及其状态的变化，里面没有讲到`self.skipWaiting()`，`clients.claim()`详细的使用方式；没有讲到为什么要使用`waitUntil`;也没有讲到`Cache Storage`；后续有时间会再写篇文章单独讲解，欢迎大家留言指正。
 
 # 参考文献
 
