@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Example</title>
+  </head>
+  <body>
+    <h1>图片拖拽粘贴</h1>
+    <p>拖拽或者粘贴图片到这里~</p>
+    <img style="max-width: 50%" id="img" />
+
+    <script>
+      const imgEle = document.getElementById("img");
+      document.addEventListener("paste", pasteToUpload);
+      document.addEventListener("drop", dropToUpload);
+      document.ondragover = (e) => {
+        e.preventDefault();
+      };
+      function pasteToUpload({ clipboardData: { items } }) {
+        const file = items[0].getAsFile();
+        const fr = new FileReader(); //方式一
+        fr.readAsDataURL(file);
+        fr.onload = (evt) => {
+          imgEle.src = evt.target.result;
+        };
+      }
+      function dropToUpload(e) {
+        e.preventDefault();
+        const file = e.dataTransfer.files[0];
+        const src = URL.createObjectURL(file); //方式二
+        imgEle.src = src;
+        imgEle.onload = () => {
+          // 手动回收
+          URL.revokeObjectURL(src);
+        };
+      }
+    </script>
+  </body>
+</html>
