@@ -1,4 +1,6 @@
-# Content-Length
+# 小例子之 Content-length 与 Transfer-Encoding
+
+## Content-Length
 
 ```js
 const net = require("node:net");
@@ -32,7 +34,7 @@ server.listen(9000, () => {
   如果 Content-Length 中长度大于请求体 body 长度，浏览器一直 pending
   如果 Content-Length 中长度小于请求体 body 长度，浏览器会截断内容正常响应
 
-# Transfer-Encoding
+## Transfer-Encoding
 
 ```js
 const net = require("node:net");
