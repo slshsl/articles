@@ -5,7 +5,7 @@ router.post("/", (req, res) => {
   handleUpload(req, res, (err) => {
     console.log(res);
     if (!err) {
-      const url = `/upload/${req.files[0].filename}`;
+      const url = `/${req.files[0].filename}`;
       res.send({
         code: 0,
         msg: "",

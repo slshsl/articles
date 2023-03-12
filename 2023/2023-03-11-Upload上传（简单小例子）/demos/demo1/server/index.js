@@ -2,9 +2,12 @@ const express = require("express");
 const path = require("path");
 
 const app = express();
-const staticRoot = path.resolve(__dirname, "../client");
+const clientRoot = path.resolve(__dirname, "../client");
+const uploadRoot = path.resolve(__dirname, "../upload");
 
-app.use(express.static(staticRoot));
+app.use(express.static(clientRoot));
+
+app.use(express.static(uploadRoot));
 
 app.use("/api/upload", require("./routes/upload"));
 

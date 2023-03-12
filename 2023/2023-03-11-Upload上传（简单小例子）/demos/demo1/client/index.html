@@ -9,9 +9,13 @@
   <body>
     <input type="file" id="inputEle" multiple />
     <button id="btnEle">点击上传</button>
+    <div>
+      <img id="imgEle" src="" alt="" />
+    </div>
     <script>
       const btnEle = document.getElementById("btnEle");
       const inputEle = document.getElementById("inputEle");
+      const imgEle = document.getElementById("imgEle");
       btnEle.addEventListener("click", () => {
         const files = inputEle.files;
         const length = files.length;
@@ -30,6 +34,7 @@
         })
           .then((response) => response.json())
           .then((result) => {
+            imgEle.src = result.data;
             console.log("Success:", result);
           })
           .catch((error) => {
