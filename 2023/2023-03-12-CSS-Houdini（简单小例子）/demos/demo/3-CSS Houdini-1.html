@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="divport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      /*
+        我们从UI设计出图测量出以下变量的值，
+        --coupon-height: 优惠券高度;
+        --border-radius: 优惠券圆角半径;        
+        --sawtooth-space: 优惠券锯齿间距;
+        --sawtooth-radius: 优惠券圆点锯齿半径;     
+      */
+      :root {
+        --coupon-height: 113px;
+        --border-radius: 10px;
+        --sawtooth-space: 3px;
+        --sawtooth-radius: 3px;
+
+        --sawtooth-height: calc(
+          var(--coupon-height) - var(--border-radius) * 2
+        );
+
+        --fillet-border-height: calc(
+          var(--coupon-height) + var(--border-radius) * 2
+        );
+      }
+
+      .center {
+        width: 100vm;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .use-coupon-content {
+        width: 500px;
+        height: var(--coupon-height);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .use-coupon-content .use-coupon-left {
+        width: var(--coupon-height);
+        height: 100%;
+        border-radius: var(--border-radius) 0 0 var(--border-radius);
+        background: linear-gradient(to right, #ff4019, #ff9500);
+
+        position: relative;
+        flex-shrink: 0;
+      }
+
+      .use-coupon-content .use-coupon-left::before {
+        content: "";
+        position: absolute;
+        width: calc(var(--border-radius) * 2);
+        height: var(--fillet-border-height);
+
+        box-sizing: border-box;
+        border-top: calc(var(--border-radius) * 2) dotted white;
+        border-bottom: calc(var(--border-radius) * 2) dotted white;
+
+        top: calc(var(--border-radius) * -1);
+        right: calc(var(--border-radius) * -1);
+      }
+
+      .use-coupon-content .use-coupon-left::after {
+        content: "";
+        width: var(--sawtooth-radius);
+        height: var(--sawtooth-height);
+        background: white;
+
+        position: absolute;
+
+        right: 0;
+        top: var(--border-radius);
+
+        background-image: radial-gradient(
+          var(--sawtooth-radius) at var(--sawtooth-radius)
+            calc(var(--sawtooth-radius) + var(--sawtooth-space)),
+          transparent,
+          transparent,
+          transparent,
+          transparent,
+          #ff9500
+        );
+        background-position: 0px 0px;
+        background-size: var(--sawtooth-radius)
+          calc(var(--sawtooth-radius) * 2 + var(--sawtooth-space));
+        background-repeat: repeat-y;
+      }
+
+      .use-coupon-content .use-coupon-right {
+        min-width: 245px;
+        height: 100%;
+        border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        background: #fff4e6;
+
+        position: relative;
+        flex: 1;
+      }
+
+      .use-coupon-content .use-coupon-right::before {
+        content: "";
+        position: absolute;
+        width: calc(var(--border-radius) * 2);
+        height: var(--fillet-border-height);
+
+        box-sizing: border-box;
+        border-top: calc(var(--border-radius) * 2) dotted white;
+        border-bottom: calc(var(--border-radius) * 2) dotted white;
+        top: calc(var(--border-radius) * -1);
+        left: calc(var(--border-radius) * -1);
+      }
+
+      .use-coupon-content .use-coupon-right::after {
+        content: " ";
+        width: var(--sawtooth-radius);
+        height: var(--sawtooth-height);
+        background: #fff4e6;
+
+        position: absolute;
+
+        left: calc(var(--sawtooth-radius) * -1);
+        top: var(--border-radius);
+
+        background-image: radial-gradient(
+          var(--sawtooth-radius) at var(--sawtooth-radius)
+            calc(var(--sawtooth-radius) + var(--sawtooth-space)),
+          transparent,
+          transparent,
+          transparent,
+          transparent,
+          #ff9500
+        );
+        background-position: 0px 0px;
+        background-size: var(--sawtooth-radius)
+          calc(var(--sawtooth-radius) * 2 + var(--sawtooth-space));
+        background-repeat: repeat-y;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="center">
+      <div class="use-coupon-content">
+        <div class="use-coupon-left"></div>
+        <div class="use-coupon-right"></div>
+      </div>
+    </div>
+    <canvas id="myCanvas" width=" 400" height="400">抱歉，你的浏览器版本不支持canvas</canvas>
+    <script>
+      var drawing=document.getElementById("myCanvas");
+var context=drawing.getContext("2d");
+console.log(context)
+    </script>
+  </body>
+</html>
