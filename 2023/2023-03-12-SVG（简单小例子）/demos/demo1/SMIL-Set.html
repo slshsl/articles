@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <svg width="320" height="320" xmlns="http://www.w3.org/2000/svg">
+      <g>
+        <text font-family="microsoft yahei" font-size="120" y="160" x="160">
+          马
+          <set attributeName="x" attributeType="XML" to="60" begin="3s" />
+        </text>
+      </g>
+    </svg>
+  </body>
+</html>
+
+<!-- 
+  set意思设置，此元素没有动画效果。你可能会疑问了，既然这个元素没有动画效果，怎么会是animation五大天团成员之一呢？
+
+  OK, 这样的，虽然set虽然不能触发连续的动画，但是，其还是可以实现基本的延迟功能。
+
+  就是指：可以在特定时间之后修改某个属性值（也可以是CSS属性值）。
+
+  举个例子，下面这个「马」会在3秒之后从横坐标160的位置移动60这个位置。
+-->

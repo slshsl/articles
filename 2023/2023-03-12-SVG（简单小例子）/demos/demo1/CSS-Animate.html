@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      svg > line {
+        transform-origin: 4px 12px;
+      }
+      svg > line:nth-of-type(1) {
+        animation: lineWave 1s linear 0.7s infinite;
+      }
+      svg > line:nth-of-type(2) {
+        animation: lineWave 1s linear 0.4s infinite;
+      }
+      svg > line:nth-of-type(3) {
+        animation: lineWave 1s linear 0.1s infinite;
+      }
+      @keyframes lineWave {
+        0% {
+          transform: scaleY(1);
+        }
+
+        50% {
+          transform: scaleY(0);
+        }
+
+        100% {
+          transform: scaleY(1);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <svg width="160" height="160" viewBox="0 0 16 16">
+      <circle cx="8" cy="8" r="8" stroke="none" fill="#e92689" />
+      <line
+        className="line-0"
+        stroke="#fff"
+        stroke-linecap="round"
+        strokeWidth="1.5"
+        x1="5"
+        y1="3"
+        x2="5"
+        y2="12"
+      />
+      <line
+        className="line-1"
+        stroke="#fff"
+        stroke-linecap="round"
+        strokeWidth="1.5"
+        x1="8"
+        y1="3"
+        x2="8"
+        y2="12"
+      />
+      <line
+        className="line-2"
+        stroke="#fff"
+        stroke-linecap="round"
+        strokeWidth="1.5"
+        x1="11"
+        y1="3"
+        x2="11"
+        y2="12"
+      />
+    </svg>
+  </body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <svg
+      width="500px"
+      height="500px"
+      viewBox="0 0 500 500"
+      xmlns="http://www.w3.org/2000/svg"
+      version="1.1"
+    >
+      <path id="my_path" d="M 20,20 C 40,40 80,40 100,20" fill="transparent" />
+      <text>
+        <textPath
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          xlink:href="#my_path"
+        >
+          This text.
+        </textPath>
+      </text>
+    </svg>
+  </body>
+</html>

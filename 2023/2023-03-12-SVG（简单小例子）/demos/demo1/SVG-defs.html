@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <svg
+      width="80px"
+      height="30px"
+      viewBox="0 0 80 30"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <defs>
+        <linearGradient id="Gradient01">
+          <stop offset="20%" stop-color="#39F" />
+          <stop offset="90%" stop-color="#F3F" />
+        </linearGradient>
+      </defs>
+
+      <rect x="10" y="10" width="60" height="20" fill="url(#Gradient01)" />
+    </svg>
+  </body>
+</html>
+
+<!-- 
+    SVG允许定义图形对象以备后用。建议尽可能在元素内部定义引用的<defs>元素。
+    在<defs>元素中定义这些元素可以提高SVG内容的可理解性，从而提高可访问性。
+    元素中定义的图形元素<defs>不会被直接渲染。您可以使用<use>元素在视口中的任何位置呈现这些元素。
+-->

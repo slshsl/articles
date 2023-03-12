@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <svg width="120" height="120" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <clipPath id="myClip">
+          <circle cx="30" cy="30" r="20" />
+          <circle cx="70" cy="70" r="20" />
+        </clipPath>
+      </defs>
+      <rect
+        fill="red"
+        x="10"
+        y="10"
+        width="100"
+        height="100"
+        clip-path="url(#myClip)"
+      />
+    </svg>
+
+    <style>
+      svg {
+        border: 3px dashed #999;
+      }
+      svg > rect:hover {
+        fill: green;
+      }
+    </style>
+  </body>
+</html>
