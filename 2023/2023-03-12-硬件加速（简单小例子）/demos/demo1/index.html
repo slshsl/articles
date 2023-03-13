@@ -1,86 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>css3 animation</title>
-    <link rel="icon" href="favicon.ico" type="image/vnd.microsoft.icon" />
-    <style>
-      *,
-      *:hover {
-        margin: 0;
-        padding: 0;
-      }
-      body {
-        display: flex;
-        justify-content: center;
-        overflow: hidden;
-      }
-      .wrapper {
-        width: 50%;
-        height: 100vh;
-        border-left: 1px solid #666;
-        padding: 10px;
-      }
-      .element {
-        width: 60px;
-        height: 40px;
-        border-radius: 5px;
-        background: #92b901;
-      }
-      @keyframes move_animation {
-        0% {
-          transform: translate(0, 0);
-        }
-        25% {
-          transform: translate(200px, 0);
-        }
-        50% {
-          transform: translate(200px, 200px);
-        }
-        75% {
-          transform: translate(0, 200px);
-        }
-        100% {
-          transform: translate(0, 0);
-        }
-      }
-      @keyframes position_animation {
-        0% {
-          top: 10px;
-          left: 10px;
-        }
-        25% {
-          top: 10px;
-          left: 210px;
-        }
-        50% {
-          top: 210px;
-          left: 210px;
-        }
-        75% {
-          top: 210px;
-          left: 10px;
-        }
-        100% {
-          top: 10px;
-          left: 10px;
-        }
-      }
-      .css-div {
-        animation: move_animation 4s infinite;
-      }
-      .ps-div {
-        position: absolute;
-        animation: position_animation 4s infinite;
-      }
-    </style>
-  </head>
-  <body>
-    <section class="wrapper">
-      <div class="ps-div element"></div>
-    </section>
-    <section class="wrapper">
-      <div class="css-div element"></div>
-    </section>
-  </body>
+	<head>
+		<meta charset="UTF-8" />
+		<title>css3 animation</title>
+		<link rel="icon" href="favicon.ico" type="image/vnd.microsoft.icon" />
+		<style>
+			*,
+			*:hover {
+				margin: 0;
+				padding: 0;
+			}
+			body {
+				display: flex;
+				justify-content: center;
+				overflow: hidden;
+			}
+			.wrapper {
+				width: 50%;
+				height: 100vh;
+				border-left: 1px solid #666;
+				padding: 10px;
+			}
+			.element {
+				width: 60px;
+				height: 40px;
+				border-radius: 5px;
+				background: #92b901;
+			}
+			@keyframes move_animation {
+				0% {
+					transform: translate(0, 0);
+				}
+				25% {
+					transform: translate(200px, 0);
+				}
+				50% {
+					transform: translate(200px, 200px);
+				}
+				75% {
+					transform: translate(0, 200px);
+				}
+				100% {
+					transform: translate(0, 0);
+				}
+			}
+			@keyframes position_animation {
+				0% {
+					top: 10px;
+					left: 10px;
+				}
+				25% {
+					top: 10px;
+					left: 210px;
+				}
+				50% {
+					top: 210px;
+					left: 210px;
+				}
+				75% {
+					top: 210px;
+					left: 10px;
+				}
+				100% {
+					top: 10px;
+					left: 10px;
+				}
+			}
+			.css-div {
+				animation: move_animation 4s infinite;
+			}
+			.ps-div {
+				position: absolute;
+				animation: position_animation 4s infinite;
+			}
+		</style>
+	</head>
+	<body>
+		<section class="wrapper">
+			<div class="ps-div element"></div>
+		</section>
+		<section class="wrapper">
+			<div class="css-div element"></div>
+		</section>
+	</body>
 </html>

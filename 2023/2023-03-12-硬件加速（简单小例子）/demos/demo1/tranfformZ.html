@@ -1,34 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <style>
-      .box {
-        display: inline-block;
-        width: 200px;
-        height: 200px;
-        margin: 10px;
-        background: red;
-      }
-    </style>
-  </head>
-  <body>
-    <!-- 
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<style>
+			.box {
+				display: inline-block;
+				width: 200px;
+				height: 200px;
+				margin: 10px;
+				background: red;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- 
         设置 transform: translateZ(0)，注意它必须是 translateZ
         因为它使用 GPU 来计算 perspective distortion（透视失真）。
         如果你使用 translateX 或 translateY，元素将会被绘制在普通文档流中
     -->
-    <div class="box" style="transform: translateX(0)">
-      transform: translateX(0);
-    </div>
-    <div class="box" style="transform: translateY(0)">
-      transform: translateY(0);
-    </div>
-    <div class="box" style="transform: translateZ(0)">
-      transform: translateZ(0);
-    </div>
-  </body>
+		<div class="box" style="transform: translateX(0)">
+			transform: translateX(0);
+		</div>
+		<div class="box" style="transform: translateY(0)">
+			transform: translateY(0);
+		</div>
+		<div class="box" style="transform: translateZ(0)">
+			transform: translateZ(0);
+		</div>
+	</body>
 </html>

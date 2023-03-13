@@ -1,0 +1,307 @@
+{
+	// Disable some built-in rules
+	"config": {
+		// MD001 - Heading levels should only increment by one level at a time
+		// 标题必须自增  header-increment===heading-increment（两个等同）
+		"header-increment": true,
+		"heading-increment": true,
+
+		// MD003 - Heading style
+		// 采用一致的标题语法 header-style===heading-style（两个等同）
+		"header-style": {
+			"style": "atx" // 采用# 号语法表示标题
+		},
+		"heading-style": {
+			"style": "atx" // 采用# 号语法表示标题
+		},
+
+		// MD004 - Unordered list style
+		// 一致的无序列表语法
+		"ul-style": {
+			"style": "dash" //采用-号语法，例如- JavaScript
+		},
+
+		// MD005 - Inconsistent indentation for list items at the same level
+		// 列表要有一致的缩进
+		"list-indent": true,
+
+		// MD007 - Unordered list indentation
+		// 无序列表缩进
+		"ul-indent": {
+			"indent": 2, //与父列表项2个缩进
+			"start_indent": 2, //首列表项2个缩进，start_indented为true才生效
+			"start_indented": false //首列表项是否要缩进
+		},
+
+		// MD009 - Trailing spaces
+		"no-trailing-spaces": {
+			"br_spaces": 2,
+			"list_item_empty_lines": false,
+			"strict": false
+		},
+
+		// MD010 - Hard tabs
+		"no-hard-tabs": {
+			"code_blocks": true,
+			"ignore_code_languages": [],
+			"spaces_per_tab": 2
+		},
+
+		// MD011 - Reversed link syntax
+		"no-reversed-links": true,
+
+		// MD012 - Multiple consecutive blank lines
+		"no-multiple-blanks": {
+			"maximum": 1
+		},
+
+		// MD013 - Line length
+		// 一行长度
+		"line-length": {
+			"line_length": 200,
+			"code_blocks": true, //代码块长度
+			"code_block_line_length": 80,
+			"headers": true, //标题长度
+			"heading_line_length": 80,
+			"tables": false,
+			"strict": false,
+			"stern": false
+		},
+
+		//MD014 - Dollar signs used before commands without showing output
+		"commands-show-output": true,
+
+		//MD018 - No space after hash on atx style heading
+		"no-missing-space-atx": true,
+
+		// MD019 - Multiple spaces after hash on atx style heading
+		"no-multiple-space-atx": true,
+
+		// MD020 - No space inside hashes on closed atx style heading
+		"no-missing-space-closed-atx": true,
+
+		// MD021 - Multiple spaces inside hashes on closed atx style heading
+		"no-multiple-space-closed-atx": true,
+
+		// MD022 - Headings should be surrounded by blank lines
+		// 标题上下空行 blanks-around-headers===blanks-around-headings（两个等同）
+		"blanks-around-headers": {
+			"lines_above": 1,
+			"lines_below": 1
+		},
+		"blanks-around-headings": {
+			"lines_above": 1,
+			"lines_below": 1
+		},
+
+		// MD023 - Headings must start at the beginning of the line
+		// 标题必须是衣阿华那个的开始 header-start-left===heading-start-left（两个等同）
+		"header-start-left": true,
+		"heading-start-left": true,
+
+		// MD024 - Multiple headings with the same content
+		// 多个标题的文本不能相同 no-duplicate-header===no-duplicate-heading（两个等同）
+		"no-duplicate-header": {
+			"allow_different_nesting": false,
+			"siblings_only": false
+		},
+		"no-duplicate-heading": {
+			"allow_different_nesting": false,
+			"siblings_only": false
+		},
+
+		// MD025 - Multiple top-level headings in the same document
+		// 多个标题的文本不能相同 single-h1===single-title（两个等同）
+		"single-h1": {
+			"front_matter_title": "^\\s*title\\s*[:=]",
+			"level": 1
+		},
+		"single-title": {
+			"front_matter_title": "^\\s*title\\s*[:=]",
+			"level": 1
+		},
+
+		// MD026 - Trailing punctuation in heading
+		// 标题后面不能有标点符号
+		"no-trailing-punctuation": {
+			"punctuation": ".,;:!。，；：！"
+		},
+
+		// MD027 - Multiple spaces after blockquote symbol
+		// 引用语法>不能有多个空格
+		"no-multiple-space-blockquote": true,
+
+		// MD028 - Blank line inside blockquote
+		"no-blanks-blockquote": true,
+
+		// MD029 - Ordered list item prefix
+		// 有序列表语法规则
+		"ol-prefix": {
+			"style": "ordered" // 有序列表要连续
+		},
+
+		// MD030 - Spaces after list markers
+		"list-marker-space": {
+			"ol_multi": 1,
+			"ol_single": 1,
+			"ul_multi": 1,
+			"ul_single": 1
+		},
+
+		// MD031 - Fenced code blocks should be surrounded by blank lines
+		"blanks-around-fences": {
+			"list_items": true
+		},
+
+		// MD032 - Lists should be surrounded by blank lines
+		// 列表上下必须要有空行
+		"blanks-around-lists": true,
+
+		// MD033 - Inline HTML
+		// 是否允许内嵌的html元素
+		"no-inline-html": {
+			"allowed_elements": [
+				"i",
+				"b",
+				"em",
+				"u",
+				"del",
+				"sup",
+				"sub",
+				"kbd",
+				"div",
+				"img"
+			]
+		},
+
+		// MD034 - Bare URL used
+		"no-bare-urls": true,
+
+		// MD035 - Horizontal rule style
+		// 采用一致的水平线语法
+		"hr-style": {
+			"style": "---" // 采用---语法表示水平线
+		},
+
+		// MD036 - Emphasis used instead of a heading
+		// 标题中不能有符号 no-emphasis-as-heade===no-emphasis-as-heading（两个等同）
+		"no-emphasis-as-header": {
+			"punctuation": ".,;:!?。，；：！？"
+		},
+		"no-emphasis-as-heading": {
+			"punctuation": ".,;:!?。，；：！？"
+		},
+
+		// MD037 - Spaces inside emphasis markers
+		"no-space-in-emphasis": true,
+
+		// MD038 - Spaces inside code span elements
+		"no-space-in-code": true,
+
+		// MD039 - Spaces inside link text
+		"no-space-in-links": true,
+
+		// MD040 - Fenced code blocks should have a language specified
+		// 代码块围栏必须指定语言
+		"fenced-code-language": {
+			"allowed_languages": [
+				"code",
+				"bash",
+				"html",
+				"javascript",
+				"json",
+				"markdown",
+				"text",
+				"xml",
+				"yaml",
+				"css",
+				"diff"
+			],
+			"language_only": false //是否只能包含语言，可以包含别的，例如显示行号、高亮等
+		},
+
+		// MD041 - First line in a file should be a top-level heading
+		"first-line-h1": {
+			"front_matter_title": "^\\s*title\\s*[:=]",
+			"level": 1
+		},
+		"first-line-heading": {
+			"front_matter_title": "^\\s*title\\s*[:=]",
+			"level": 1
+		},
+
+		// MD042 - No empty links
+		"no-empty-links": true,
+
+		// MD043 - Required heading structure
+		// 标题必须是指定的之一 required-headers===required-headings（两个等同）
+		"required-headers": {
+			"headers": ["*"],
+			"headings": ["*"],
+			"match_case": false
+		},
+		"required-headings": {
+			"headers": ["*"],
+			"headings": ["*"],
+			"match_case": false
+		},
+
+		// MD044 - Proper names should have the correct capitalization
+		// 正确的名称
+		"proper-names": {
+			"code_blocks": false,
+			"names": [
+				"CommonMark",
+				"JavaScript",
+				"Markdown",
+				"markdown-it",
+				"markdownlint",
+				"markdownlint-cli2",
+				"Node.js"
+			]
+		},
+
+		// MD045 - Images should have alternate text (alt text)
+		"o-alt-text": true,
+
+		// MD046 - Code block style
+		// 一致的代码块样式
+		"code-block-style": {
+			"style": "fenced"
+		},
+
+		// MD047 - Files should end with a single newline character
+		"single-trailing-newline": true,
+
+		// MD048 - Code fence style
+		// 一致的代码块围栏语法
+		"code-fence-style": {
+			"style": "backtick" //采用反引号表示代码块
+		},
+
+		// MD049 - Emphasis style should be consistent
+		// 一致的强调语法
+		"emphasis-style": {
+			"style": "asterisk" //采用*号表示强调，例如*JavaScript*
+		},
+
+		// MD050 - Strong style should be consistent
+		// 一致的加粗语法
+		"strong-style": {
+			"style": "asterisk" // 采用*号语法，例如**JavaScript**
+		},
+
+		// MD051 - Link fragments should be valid
+		"link-fragments": true,
+
+		// MD052 - Reference links and images should use a label that is defined
+		"reference-links-images": true,
+
+		// MD053 - Link and image reference definitions should be needed
+		"ink-image-reference-definitions": {
+			"ignored_definitions": []
+		}
+	},
+	"globs": ["**/*.md"],
+	"ignores": ["**/node_modules", "**/.history", "**/CHANGELOG.md"]
+}

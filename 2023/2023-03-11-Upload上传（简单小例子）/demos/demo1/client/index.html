@@ -1,46 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body>
-    <input type="file" id="inputEle" multiple />
-    <button id="btnEle">点击上传</button>
-    <div>
-      <img id="imgEle" src="" alt="" />
-    </div>
-    <script>
-      const btnEle = document.getElementById("btnEle");
-      const inputEle = document.getElementById("inputEle");
-      const imgEle = document.getElementById("imgEle");
-      btnEle.addEventListener("click", () => {
-        const files = inputEle.files;
-        const length = files.length;
-        if (!length) {
-          alert("请先选择文件");
-          return;
-        }
-        const formData = new FormData();
-        for (let i = 0; i < length; i++) {
-          formData.append(`file_${i}`, files[i]);
-        }
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<input type="file" id="inputEle" multiple />
+		<button id="btnEle">点击上传</button>
+		<div>
+			<img id="imgEle" src="" alt="" />
+		</div>
+		<script>
+			const btnEle = document.getElementById('btnEle');
+			const inputEle = document.getElementById('inputEle');
+			const imgEle = document.getElementById('imgEle');
+			btnEle.addEventListener('click', () => {
+				const files = inputEle.files;
+				const length = files.length;
+				if (!length) {
+					alert('请先选择文件');
+					return;
+				}
+				const formData = new FormData();
+				for (let i = 0; i < length; i++) {
+					formData.append(`file_${i}`, files[i]);
+				}
 
-        fetch("/api/upload", {
-          method: "POST",
-          body: formData,
-        })
-          .then((response) => response.json())
-          .then((result) => {
-            imgEle.src = result.data;
-            console.log("Success:", result);
-          })
-          .catch((error) => {
-            console.error("Error:", error);
-          });
-      });
-    </script>
-  </body>
+				fetch('/api/upload', {
+					method: 'POST',
+					body: formData
+				})
+					.then((response) => response.json())
+					.then((result) => {
+						imgEle.src = result.data;
+						console.log('Success:', result);
+					})
+					.catch((error) => {
+						console.error('Error:', error);
+					});
+			});
+		</script>
+	</body>
 </html>

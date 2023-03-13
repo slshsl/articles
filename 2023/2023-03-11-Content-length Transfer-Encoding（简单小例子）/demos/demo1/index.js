@@ -9,21 +9,21 @@
 //      如果Content-Length中长度大于请求体body长度，浏览器一直pending
 //      如果Content-Length中长度小于请求体body长度，浏览器会截断内容正常响应
 
-const net = require("node:net");
+const net = require('node:net');
 const server = net
-  .createServer((socket) => {
-    socket.on("data", function (data) {
-      socket.write("HTTP/1.1 200 OK\r\n");
-      socket.write("Content-Length:12\r\n"); //  1
-      socket.write("\r\n");
-      socket.write("hello world!");
-      socket.destroy(); // 2
-    });
-  })
-  .on("error", (err) => {
-    throw err;
-  });
+	.createServer((socket) => {
+		socket.on('data', function () {
+			socket.write('HTTP/1.1 200 OK\r\n');
+			socket.write('Content-Length:12\r\n'); //  1
+			socket.write('\r\n');
+			socket.write('hello world!');
+			socket.destroy(); // 2
+		});
+	})
+	.on('error', (err) => {
+		throw err;
+	});
 
 server.listen(9000, () => {
-  console.log("opened server on", server.address());
+	console.log('opened server on', server.address());
 });

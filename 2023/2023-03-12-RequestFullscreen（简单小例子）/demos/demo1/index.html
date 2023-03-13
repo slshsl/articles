@@ -1,193 +1,193 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="divport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <style>
-      body {
-        background-color: #212c3e;
-        margin: 2rem;
-        font-family: "pingfang sc", "瀹嬩綋", Arial, Helvetica, sans-serif,
-          serif;
-        color: #fff;
-        font-size: 14px;
-      }
-      .container {
-        max-width: 72rem;
-        margin: 0 auto;
-        padding: 2rem;
-      }
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="divport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<style>
+			body {
+				background-color: #212c3e;
+				margin: 2rem;
+				font-family: 'pingfang sc', '瀹嬩綋', Arial, Helvetica, sans-serif,
+					serif;
+				color: #fff;
+				font-size: 14px;
+			}
+			.container {
+				max-width: 72rem;
+				margin: 0 auto;
+				padding: 2rem;
+			}
 
-      * {
-        box-sizing: border-box;
-      }
-      .fullscreen-intro {
-        font-size: 16px;
-        line-height: 1.5;
-      }
-      p {
-        line-height: 2;
-      }
+			* {
+				box-sizing: border-box;
+			}
+			.fullscreen-intro {
+				font-size: 16px;
+				line-height: 1.5;
+			}
+			p {
+				line-height: 2;
+			}
 
-      .fullscreen-more {
-        display: none;
-        font-size: 14px;
-        color: rgba(255, 255, 255, 0.6);
-        font-weight: normal;
-      }
+			.fullscreen-more {
+				display: none;
+				font-size: 14px;
+				color: rgba(255, 255, 255, 0.6);
+				font-weight: normal;
+			}
 
-      .fullscreen-enabled:fullscreen .fullscreen-more {
-        display: block;
-      }
+			.fullscreen-enabled:fullscreen .fullscreen-more {
+				display: block;
+			}
 
-      .button {
-        padding: 6px 12px;
-        margin-bottom: 0;
-        font-weight: 400;
-        cursor: pointer;
-        text-align: center;
-        white-space: nowrap;
-        display: inline-block;
-        background-image: none;
-        border-radius: 3px;
-        box-shadow: none;
-        border: 1px solid transparent;
-      }
+			.button {
+				padding: 6px 12px;
+				margin-bottom: 0;
+				font-weight: 400;
+				cursor: pointer;
+				text-align: center;
+				white-space: nowrap;
+				display: inline-block;
+				background-image: none;
+				border-radius: 3px;
+				box-shadow: none;
+				border: 1px solid transparent;
+			}
 
-      .button-blue {
-        color: #fff;
-        background-color: #6658dd;
-        border-color: #6658dd;
-        box-shadow: 0 2px 6px 0 rgba(102, 88, 221, 0.5);
-      }
+			.button-blue {
+				color: #fff;
+				background-color: #6658dd;
+				border-color: #6658dd;
+				box-shadow: 0 2px 6px 0 rgba(102, 88, 221, 0.5);
+			}
 
-      .fullscreen-enabled {
-        display: block;
-        position: relative;
-        background-color: #0f4069 !important;
-        border: 2px solid rgba(255, 255, 255, 0.25);
-        padding: 20px 24px;
-        color: #fff;
-      }
+			.fullscreen-enabled {
+				display: block;
+				position: relative;
+				background-color: #0f4069 !important;
+				border: 2px solid rgba(255, 255, 255, 0.25);
+				padding: 20px 24px;
+				color: #fff;
+			}
 
-      .bottom-right {
-        position: absolute;
-        bottom: 10px;
-        right: 10px;
-      }
+			.bottom-right {
+				position: absolute;
+				bottom: 10px;
+				right: 10px;
+			}
 
-      .fullscreen-modal {
-        display: none;
-      }
+			.fullscreen-modal {
+				display: none;
+			}
 
-      .fullscreen-modal:fullscreen {
-        display: block;
-        padding: 1rem;
-      }
+			.fullscreen-modal:fullscreen {
+				display: block;
+				padding: 1rem;
+			}
 
-      .modal-content {
-        padding: 1rem;
-        border: 2px dashed white;
-        height: 95vh;
-      }
-      .close {
-        position: relative;
-        display: block;
-      }
+			.modal-content {
+				padding: 1rem;
+				border: 2px dashed white;
+				height: 95vh;
+			}
+			.close {
+				position: relative;
+				display: block;
+			}
 
-      .close::after {
-        right: 1rem;
-        top: -3rem;
-        width: 2rem;
-        height: 2rem;
-        position: absolute;
-        display: flex;
-        z-index: 1;
-        align-items: center;
-        justify-content: center;
-        background-color: transparent;
-        border-radius: 50%;
-        border: 2px solid white;
-        color: white;
-        content: "X";
-        cursor: pointer;
-      }
+			.close::after {
+				right: 1rem;
+				top: -3rem;
+				width: 2rem;
+				height: 2rem;
+				position: absolute;
+				display: flex;
+				z-index: 1;
+				align-items: center;
+				justify-content: center;
+				background-color: transparent;
+				border-radius: 50%;
+				border: 2px solid white;
+				color: white;
+				content: 'X';
+				cursor: pointer;
+			}
 
-      .close:focus:after {
-        color: yellow;
-        border-color: yellow;
-      }
-      .modal-body {
-        width: 90vw;
-        margin-left: auto;
-        margin-right: auto;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <h1>FullScreen API演示</h1>
-      <p>
-        FullScreen
-        API允许页面上的一个元素有一个全屏视图，通常情况下，会在不同的图形或媒体资源（例如视频或图像）中看到这一点，但实际上可以让页面上的任何元素都具有全屏视图。
-      </p>
+			.close:focus:after {
+				color: yellow;
+				border-color: yellow;
+			}
+			.modal-body {
+				width: 90vw;
+				margin-left: auto;
+				margin-right: auto;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<h1>FullScreen API演示</h1>
+			<p>
+				FullScreen
+				API允许页面上的一个元素有一个全屏视图，通常情况下，会在不同的图形或媒体资源（例如视频或图像）中看到这一点，但实际上可以让页面上的任何元素都具有全屏视图。
+			</p>
 
-      <button
-        aria-label="点击打开全屏modal"
-        class="button fullscreener button-blue"
-      >
-        全屏 Modal
-      </button>
-    </div>
-    <section
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="modalLabel"
-      class="fullscreen-enabled fullscreen-modal"
-    >
-      <div class="modal-content">
-        <h2 id="modalLabel" class="fullscreen-more">
-          全屏模式下才会显示的内容
-        </h2>
-        <span
-          role="button"
-          tabindex="0"
-          aria-label="Close the modal"
-          class="fullscreener close"
-        ></span>
-        <div class="modalBody">
-          <p>
-            要在用户的浏览器上启用全屏视图，首先需要使用
-            Element.requestFullScreen
-            函数请求获取许可。这与请求访问位置数据不同，浏览器基本上是通过判断用户是否执行了一个特定的操作来批准或拒绝全屏访问，比如单击一个允许按钮来确定请求是否被接受。
-          </p>
-        </div>
-      </div>
-    </section>
-    <script type="text/javascript">
-      const toggleFullScreen = (el) => {
-        if (!document.fullscreenElement) {
-          el.requestFullscreen();
-          return;
-        }
-        document.exitFullscreen();
-      };
+			<button
+				aria-label="点击打开全屏modal"
+				class="button fullscreener button-blue"
+			>
+				全屏 Modal
+			</button>
+		</div>
+		<section
+			role="dialog"
+			aria-modal="true"
+			aria-labelledby="modalLabel"
+			class="fullscreen-enabled fullscreen-modal"
+		>
+			<div class="modal-content">
+				<h2 id="modalLabel" class="fullscreen-more">
+					全屏模式下才会显示的内容
+				</h2>
+				<span
+					role="button"
+					tabindex="0"
+					aria-label="Close the modal"
+					class="fullscreener close"
+				></span>
+				<div class="modalBody">
+					<p>
+						要在用户的浏览器上启用全屏视图，首先需要使用
+						Element.requestFullScreen
+						函数请求获取许可。这与请求访问位置数据不同，浏览器基本上是通过判断用户是否执行了一个特定的操作来批准或拒绝全屏访问，比如单击一个允许按钮来确定请求是否被接受。
+					</p>
+				</div>
+			</div>
+		</section>
+		<script type="text/javascript">
+			const toggleFullScreen = (el) => {
+				if (!document.fullscreenElement) {
+					el.requestFullscreen();
+					return;
+				}
+				document.exitFullscreen();
+			};
 
-      const buttons = document.querySelectorAll(".fullscreener");
-      const fullScreenEnabledEl = document.querySelector(".fullscreen-enabled");
+			const buttons = document.querySelectorAll('.fullscreener');
+			const fullScreenEnabledEl = document.querySelector('.fullscreen-enabled');
 
-      buttons.forEach((button) => {
-        button.addEventListener("click", () => {
-          toggleFullScreen(fullScreenEnabledEl);
-        });
-        button.addEventListener("keydown", (e) => {
-          if (e.key === "Enter") {
-            toggleFullScreen(fullScreenEnabledEl);
-          }
-        });
-      });
-    </script>
-  </body>
+			buttons.forEach((button) => {
+				button.addEventListener('click', () => {
+					toggleFullScreen(fullScreenEnabledEl);
+				});
+				button.addEventListener('keydown', (e) => {
+					if (e.key === 'Enter') {
+						toggleFullScreen(fullScreenEnabledEl);
+					}
+				});
+			});
+		</script>
+	</body>
 </html>

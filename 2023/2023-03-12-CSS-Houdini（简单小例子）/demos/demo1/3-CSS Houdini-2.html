@@ -1,79 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="divport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <style>
-      .center {
-        width: 100vm;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="divport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<style>
+			.center {
+				width: 100vm;
+				height: 100vh;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
 
-      .use-coupon-content {
-        width: 500px;
-        height: 113px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
+			.use-coupon-content {
+				width: 500px;
+				height: 113px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
 
-      .use-coupon-content .use-coupon-left {
-        width: 113px;
-        height: 100%;
+			.use-coupon-content .use-coupon-left {
+				width: 113px;
+				height: 100%;
 
-        box-sizing: border-box;
+				box-sizing: border-box;
 
-        border: 10px solid;
-        border-image: paint(border-radius-reverse);
-        --border-top-left-radius: 10;
-        --border-top-right-radius-reverse: 10;
-        --border-bottom-right-radius-reverse: 10;
-        --border-bottom-left-radius: 10;
-        --linear-color-start: #ff4019;
-        --linear-color-end: #ff9500;
-        border-image-slice: 10 fill;
+				border: 10px solid;
+				border-image: paint(border-radius-reverse);
+				--border-top-left-radius: 10;
+				--border-top-right-radius-reverse: 10;
+				--border-bottom-right-radius-reverse: 10;
+				--border-bottom-left-radius: 10;
+				--linear-color-start: #ff4019;
+				--linear-color-end: #ff9500;
+				border-image-slice: 10 fill;
 
-        --border-right-sawtooth-radius: 3;
-        --border-right-sawtooth-color: #fff4e6;
+				--border-right-sawtooth-radius: 3;
+				--border-right-sawtooth-color: #fff4e6;
 
-        position: relative;
-        flex-shrink: 0;
-      }
+				position: relative;
+				flex-shrink: 0;
+			}
 
-      .use-coupon-content .use-coupon-right {
-        min-width: 245px;
-        height: 100%;
+			.use-coupon-content .use-coupon-right {
+				min-width: 245px;
+				height: 100%;
 
-        box-sizing: border-box;
+				box-sizing: border-box;
 
-        border: 10px solid;
-        border-image: paint(border-radius-reverse);
-        --border-top-left-radius-reverse: 10;
-        --border-top-right-radius: 10;
-        --border-bottom-right-radius: 10;
-        --border-bottom-left-radius-reverse: 10;
-        --border-color: #fff4e6;
-        border-image-slice: 10 fill;
+				border: 10px solid;
+				border-image: paint(border-radius-reverse);
+				--border-top-left-radius-reverse: 10;
+				--border-top-right-radius: 10;
+				--border-bottom-right-radius: 10;
+				--border-bottom-left-radius-reverse: 10;
+				--border-color: #fff4e6;
+				border-image-slice: 10 fill;
 
-        position: relative;
-        flex: 1;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="center">
-      <div class="use-coupon-content">
-        <div class="use-coupon-left"></div>
-        <div class="use-coupon-right"></div>
-      </div>
-    </div>
-    <script>
-      CSS.paintWorklet.addModule("border-radius-reverse.js");
-    </script>
-  </body>
+				position: relative;
+				flex: 1;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="center">
+			<div class="use-coupon-content">
+				<div class="use-coupon-left"></div>
+				<div class="use-coupon-right"></div>
+			</div>
+		</div>
+		<script>
+			CSS.paintWorklet.addModule('border-radius-reverse.js');
+		</script>
+	</body>
 </html>

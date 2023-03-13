@@ -1,89 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body>
-    <input type="file" name="" id="uploadIpt" />
-    <button id="uploadBtn">上传</button>
-    <div>
-      <img id="imgEle" src="" alt="" />
-    </div>
-    <script src="https://cdn.bootcdn.net/ajax/libs/axios/1.2.0/axios.min.js"></script>
-    <script>
-      const imgEle = document.getElementById("imgEle");
-      (function (window, document) {
-        let file;
-        const SIZE = 1024 * 1024; //1M;
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<input type="file" name="" id="uploadIpt" />
+		<button id="uploadBtn">上传</button>
+		<div>
+			<img id="imgEle" src="" alt="" />
+		</div>
+		<script src="https://cdn.bootcdn.net/ajax/libs/axios/1.2.0/axios.min.js"></script>
+		<script>
+			const imgEle = document.getElementById('imgEle');
+			(function (window, document) {
+				let file;
+				const SIZE = 1024 * 1024; //1M;
 
-        function handleInputChange(e) {
-          file = e.target.files[0];
-          console.log(file.stream());
-          if (!file) return;
-        }
+				function handleInputChange(e) {
+					file = e.target.files[0];
+					console.log(file.stream());
+					if (!file) return;
+				}
 
-        async function handleButtonChange(e) {
-          if (!file) return;
-          try {
-            const fileChunks = createFileChunks(file);
-            await uploadFileChunks(fileChunks, file.name);
-            const res = await mergeFileChunks(file.name);
-            console.log("上传成功", res);
-            imgEle.src = res.data.data;
-          } catch (error) {
-            console.log("上传失败", error);
-          }
-        }
+				async function handleButtonChange(e) {
+					if (!file) return;
+					try {
+						const fileChunks = createFileChunks(file);
+						await uploadFileChunks(fileChunks, file.name);
+						const res = await mergeFileChunks(file.name);
+						console.log('上传成功', res);
+						imgEle.src = res.data.data;
+					} catch (error) {
+						console.log('上传失败', error);
+					}
+				}
 
-        // 文件切片
-        function createFileChunks(file, size = SIZE) {
-          const fileChunks = [];
-          for (let cur = 0; cur < file.size; cur += size) {
-            fileChunks.push(file.slice(cur, cur + size));
-          }
-          return fileChunks;
-        }
+				// 文件切片
+				function createFileChunks(file, size = SIZE) {
+					const fileChunks = [];
+					for (let cur = 0; cur < file.size; cur += size) {
+						fileChunks.push(file.slice(cur, cur + size));
+					}
+					return fileChunks;
+				}
 
-        async function uploadFileChunks(fileChunks, filename) {
-          const formDataList = fileChunks.map((chunk, index) => {
-            const formData = new FormData();
-            formData.append("index", index);
-            formData.append("filename", filename);
-            formData.append("chunk", chunk);
-            return { formData };
-          });
+				async function uploadFileChunks(fileChunks, filename) {
+					const formDataList = fileChunks.map((chunk, index) => {
+						const formData = new FormData();
+						formData.append('index', index);
+						formData.append('filename', filename);
+						formData.append('chunk', chunk);
+						return { formData };
+					});
 
-          const axiosList = formDataList.map(({ formData }) => {
-            return axios({
-              method: "post",
-              url: "/upload",
-              data: formData,
-            });
-          });
+					const axiosList = formDataList.map(({ formData }) => {
+						return axios({
+							method: 'post',
+							url: '/upload',
+							data: formData
+						});
+					});
 
-          return Promise.all(axiosList);
-        }
+					return Promise.all(axiosList);
+				}
 
-        async function mergeFileChunks(filename) {
-          return axios({
-            method: "get",
-            url: "/merge",
-            params: {
-              filename,
-            },
-          });
-        }
+				async function mergeFileChunks(filename) {
+					return axios({
+						method: 'get',
+						url: '/merge',
+						params: {
+							filename
+						}
+					});
+				}
 
-        document
-          .getElementById("uploadIpt")
-          .addEventListener("change", handleInputChange);
-        document
-          .getElementById("uploadBtn")
-          .addEventListener("click", handleButtonChange);
-      })(window, document);
-    </script>
-  </body>
+				document
+					.getElementById('uploadIpt')
+					.addEventListener('change', handleInputChange);
+				document
+					.getElementById('uploadBtn')
+					.addEventListener('click', handleButtonChange);
+			})(window, document);
+		</script>
+	</body>
 </html>

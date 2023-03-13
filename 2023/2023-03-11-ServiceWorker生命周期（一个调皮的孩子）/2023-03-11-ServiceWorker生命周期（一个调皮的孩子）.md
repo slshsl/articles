@@ -1,10 +1,12 @@
+#
+
 ![avatar](./assets/banner.png)
 
-# 前言
+## 前言
 
-本文主要讲`ServiceWorker`的生命周期，以解决在阅读 MDN 官网上描述[Registering your worker](https://link.juejin.cn/?target=https%3A%2F%2Fdeveloper.mozilla.org%2Fen-US%2Fdocs%2FWeb%2FAPI%2FService_Worker_API%2FUsing_Service_Workers%23registering_your_worker "https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers#registering_your_worker")的示例中碰到的一点疑惑，以及为什么`ServiceWorker`多了一个`waiting`状态；请大家指正。
+本文主要讲`ServiceWorker`的生命周期;以解决在阅读 MDN 官网上描述[Registering your worker](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers#registering_your_worker)的示例中碰到的一点疑惑；以及为什么`ServiceWorker`多了一个`waiting`状态；请大家指正。
 
-# ServiceWorker 三剑客
+## ServiceWorker 三剑客
 
 本段主要通过注册`ServiceWorker`来引出`ServiceWorkerContainer`、`ServiceWorkerRegistration`、`ServiceWorker`这 3 个接口。
 假如通过一个`register.js`文件来注册`ServiceWorker`，代码如下（下面的代码主要是为了更好的观察`serviceWorker`的状态变化）：
@@ -35,7 +37,7 @@ if ("serviceWorker" in navigator) {
 通过`swC`的`register`方法注册一个`ServiceWorker`,该方法返回一个`promise`,该`promise resolve`的返回值是一个`ServiceWorkerRegistration`的实例，对应上面代码中的`registration`，以下就用`swR`来表示`ServiceWorkerRegistration`的实例。
 `ServiceWorker`是一个继承[EventTarget](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget)的类。以下用`sw`来表示它的实例。我们可以从`swC.controller`（当前页面激活的 sw）或者`swR.installing`、`swR.waiting`、`swR.activate`来获得处于不同状态的`sw`。
 
-# 注册过程
+## 注册过程
 
 先简单说一下`sw`的几个状态，以方便讲解其注册过程，详细的状态后面会提到；`sw`的`state`属性保存了`sw`的状态，主要有：
 
@@ -115,7 +117,7 @@ if ("serviceWorker" in navigator) {
 
 可能是我又较真了，人家不就是给个例子嘛；是的，所以不要在意，正好也借此深入了解。
 
-# 更新过程
+## 更新过程
 
 在第一次注册完成后，当前存在`activated`的`sw`；此时，假设我们改变了注册的`sw.js`文件中的内容，[这时浏览器在拿到新的 sw.js 文件后，内部去 diff 是否需要更新 sw](<https://web.dev/learn/pwa/service-workers/#:~:text=Service%20workers%20get%20updated%20when%20the%20browser%20detects%20that%20the%20service%20worker%20currently%20controlling%20the%20client%20and%20the%20new%20(from%20your%20server)%20version%20of%20the%20same%20file%20are%20byte%2Ddifferent.>)。更新过程也会触发`swR`的`updatefound`事件。与第一次注册过程中不同的是，新的`sw`的状态变化到`installed`(安装完成)后，就一直等待，因为当前存在`activated`的`sw`，无法进入下面的状态。
 **这时`swR.waiting`、`swR.activate`上都有值，`swR.waiting`对应着新的`sw`，`swR.activate`对应着老的`sw`。**
@@ -124,7 +126,7 @@ if ("serviceWorker" in navigator) {
 > 当然有解决方案可以实现刷新页面就可以使新的`sw`激活（通过`self.skipWaiting()`与`swC`的`controllerchange`事件回调实现），也有解决方案可以实现不刷新页面也可以使新的`sw`激活(通过`self.skipWaiting()`与`clients.claim()`实现）；后续也许会单独出一章节来详细讲解。本篇文章主要讲解`sw`在其生命周期里状态变化的过程中，`swR.installing`、`swR.waiting`、`swR.activate`的三个属性值的变化情况。
 > **以上主要说明`swR.installing`、`swR.waiting`、`swR.activate`会出现两个同时有值，且对应不同的`sw`，目前个人理解以上三个属性不会出现同时有值的逻辑。**
 
-# ServiceWorker 实例
+## ServiceWorker 实例
 
 `sw`的`state`属性一共有以下 6 个取值：
 
@@ -133,7 +135,8 @@ if ("serviceWorker" in navigator) {
 - `installed`：表示该`sw`安装完成，此状态经常被称为`waiting`状态
 
   > [The service worker in this state is considered a waiting worker.](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorker/state#:~:text=The%20service%20worker%20in%20this%20state%20is%20considered%20a%20waiting%20worker.)
-  > 这里需要强调一下，网上看了许多`PWA`的文章，主要描述`sw`在安装成功后一直处于`waiting`状态，这里就比较模糊，需要特殊说明一下，这个`waiting`状态实际上是`installed`状态。之所以也可以称为`waiting`状态，是因为`swR`中用`waiting`属性会保存`installed`状态的`sw`的引用。这也是我写这篇文章的另一个原因，网上大部分的文章都提到`sw`会有可能一直处于`waiting`的状态，这是为什么呢？[官网上给出的状态没有这个 waiting 状态](https://developer.mozilla.org/zh-CN/docs/Web/API/ServiceWorker/state#:~:text=ServiceWorker%20%E6%8E%A5%E5%8F%A3%E7%9A%84%E8%BF%99%E4%B8%AA%E5%8F%AA%E8%AF%BB%E7%9A%84state%E5%B1%9E%E6%80%A7%E8%BF%94%E5%9B%9E%E4%B8%80%E4%B8%AA%E4%BB%A3%E8%A1%A8%20service%20worker%20%E5%BD%93%E5%89%8D%E7%8A%B6%E6%80%81%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E3%80%82%E5%80%BC%E5%8F%AF%E4%BB%A5%E6%98%AF%E4%BB%A5%E4%B8%8B%E8%BF%99%E4%BA%9B%EF%BC%9Ainstalling%2C%20installed%2C%20activating%2C%20activated%EF%BC%8C%E6%88%96%E8%80%85%E6%98%AF%20redundant.)，所以仔细阅读了官网，给出了上面的解释，希望能帮到同样困惑的小伙伴。
+  > 这里需要强调一下，网上看了许多`PWA`的文章，主要描述`sw`在安装成功后一直处于`waiting`状态，这里就比较模糊，需要特殊说明一下，这个`waiting`状态实际上是`installed`状态。之所以也可以称为`waiting`状态，是因为`swR`中用`waiting`属性会保存`installed`状态的`sw`的引用。这也是我写这篇文章的另一个原因，网上大部分的文章都提到`sw`会有可能一直处于`waiting`的状态，这是为什么呢？
+  [官网上给出的状态没有这个 waiting 状态](https://developer.mozilla.org/zh-CN/docs/Web/API/ServiceWorker/state#:~:text=ServiceWorker%20%E6%8E%A5%E5%8F%A3%E7%9A%84%E8%BF%99%E4%B8%AA%E5%8F%AA%E8%AF%BB%E7%9A%84state%E5%B1%9E%E6%80%A7%E8%BF%94%E5%9B%9E%E4%B8%80%E4%B8%AA%E4%BB%A3%E8%A1%A8%20service%20worker%20%E5%BD%93%E5%89%8D%E7%8A%B6%E6%80%81%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E3%80%82%E5%80%BC%E5%8F%AF%E4%BB%A5%E6%98%AF%E4%BB%A5%E4%B8%8B%E8%BF%99%E4%BA%9B%EF%BC%9Ainstalling%2C%20installed%2C%20activating%2C%20activated%EF%BC%8C%E6%88%96%E8%80%85%E6%98%AF%20redundant.)，所以仔细阅读了官网，给出了上面的解释，希望能帮到同样困惑的小伙伴。
 
 - `activating`：表示该`sw`正在激活中
 - `activated`：该状态表示当前`sw`已经准备好接管事件（`fetch`等）
@@ -142,7 +145,7 @@ if ("serviceWorker" in navigator) {
   2. 当前存在`activated`的`sw`，也存在`waiting`状态的`sw`（此场景比较好解释，比如第一次注册成功后，假设改变了注册的`sw.js`文件中的内容，触发`sw`第一次更新（假设没有通过`self.skipWaiting()`使其跳过`installed`状态，一直处于`waiting`状态），此时又接着改变`sw.js`文件中的内容，触发`sw`的第二次更新，则之前第一次更新后一直处于`waiting`状态的`sw`状态变为`redundant`
   3. 当前存在`activated`状态的`sw`，不存在`waiting`状态的`sw`（此场景也比较好解释，比如，假设改变了注册的`sw.js`文件中的内容，触发`sw`第一次更新，并且使用了`self.skipWaiting()`使其跳过`waiting`,通过刷新页面或者`clients.claim()`使其进入`activated`状态，则之前活跃的`sw`被丢弃）。
 
-# ServiceWorker 生命周期
+## ServiceWorker 生命周期
 
 - `install`：此时`sw`状态处于`installing`,该回调只发生一次。
 
@@ -211,7 +214,7 @@ if ("serviceWorker" in navigator) {
   });
   ```
 
-# ServiceWorker 生命周期过程中的状态变化完整代码
+## ServiceWorker 生命周期过程中的状态变化完整代码
 
 - `register.js`：采用通知用户有新数据更新，将是否更新交给用户来决定
 
@@ -322,11 +325,11 @@ if ("serviceWorker" in navigator) {
 
   以上代码主要是为了观察`sw`的状态变化。
 
-# 总结
+## 总结
 
 大体描述了`sw`生命周期中的事件及其状态的变化，里面没有讲到`self.skipWaiting()`，`clients.claim()`详细的使用方式；没有讲到为什么要使用`waitUntil`;也没有讲到`Cache Storage`；后续有时间会再写篇文章单独讲解，欢迎大家留言指正。
 
-# 参考文献
+## 参考文献
 
 - [Service Worker API - Web APIs | MDN (mozilla.org)](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API))
 - [The service worker lifecycle (web.dev)](https://web.dev/service-worker-lifecycle/)

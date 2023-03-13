@@ -1,15 +1,15 @@
 {
-  "name": "app2",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "start": "webpack server --mode=development",
-    "build": "webpack --mode=production",
-    "build:start": "http-server ./dist -p 9001 -o",
-    "build:dev": "npm run build && npm run build:start"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+	"name": "app2",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"start": "webpack server --mode=development",
+		"build": "webpack --mode=production",
+		"build:start": "http-server ./dist -p 9001 -o",
+		"build:dev": "npm run build && npm run build:start"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC"
 }

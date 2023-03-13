@@ -2,7 +2,7 @@
 
 ## Content-Length
 
-```js
+```javascript
 const net = require("node:net");
 const server = net
   .createServer((socket) => {
@@ -36,7 +36,7 @@ server.listen(9000, () => {
 
 ## Transfer-Encoding
 
-```js
+```javascript
 const net = require("node:net");
 const server = net
   .createServer((socket) => {

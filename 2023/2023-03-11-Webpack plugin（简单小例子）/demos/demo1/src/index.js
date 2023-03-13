@@ -1,1 +1,1 @@
-console.log("hell plugin");
+console.log('hell plugin');

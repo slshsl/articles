@@ -1,15 +1,15 @@
 {
-  "name": "app1",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "start": "webpack server --mode=development",
-    "build": "webpack --mode=production",
-    "build:start": "pnpm http-server ./dist -p 9000 -o",
-    "build:dev": "pnpm run build && pnpm run build:start"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+	"name": "app1",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"start": "webpack server --mode=development",
+		"build": "webpack --mode=production",
+		"build:start": "pnpm http-server ./dist -p 9000 -o",
+		"build:dev": "pnpm run build && pnpm run build:start"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC"
 }
