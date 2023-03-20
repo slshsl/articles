@@ -36,7 +36,7 @@
 		// MD009 - Trailing spaces
 		"no-trailing-spaces": {
 			"br_spaces": 2,
-			"list_item_empty_lines": false,
+			"list_item_empty_lines": true,
 			"strict": false
 		},
 
@@ -95,7 +95,7 @@
 		},
 
 		// MD023 - Headings must start at the beginning of the line
-		// 标题必须是衣阿华那个的开始 header-start-left===heading-start-left（两个等同）
+		// 标题必须是从一行的的开始 header-start-left===heading-start-left（两个等同）
 		"header-start-left": true,
 		"heading-start-left": true,
 
@@ -132,7 +132,7 @@
 		"no-multiple-space-blockquote": true,
 
 		// MD028 - Blank line inside blockquote
-		"no-blanks-blockquote": true,
+		"no-blanks-blockquote": false,
 
 		// MD029 - Ordered list item prefix
 		// 有序列表语法规则
@@ -170,7 +170,8 @@
 				"sub",
 				"kbd",
 				"div",
-				"img"
+				"img",
+				"aside"
 			]
 		},
 
