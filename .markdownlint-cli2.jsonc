@@ -304,5 +304,5 @@
 		}
 	},
 	"globs": ["**/*.md"],
-	"ignores": ["**/node_modules", "**/.history", "**/CHANGELOG.md"]
+	"ignores": ["**/node_modules", "**/.history", "**/CHANGELOG.md", "LICENSE"]
 }
