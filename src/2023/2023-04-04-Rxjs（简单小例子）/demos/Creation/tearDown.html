@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script src="./rxjs.js"></script>
+		<script>
+			const { Observable } = rxjs;
+			const observable$ = new Observable((subscriber) => {
+				subscriber.next('A');
+				subscriber.next('B');
+
+				// 场景一
+				subscriber.complete();
+
+				// 场景二
+				// subscriber.error(new Error('Failure'));
+
+				// return的函数作为清理函数，它被执行的场景有三个
+				// 场景一：当调用subscriber.complete()之后运行
+				// 场景二：当调用subscriber.error()之后运行
+				// 场景三：当订阅被取消之后运行
+				return () => {
+					console.log('tear down');
+				};
+			});
+
+			const subscription = observable$.subscribe({
+				next: (value) => console.log(value),
+				complete: (val) => console.log('Completed')
+				// error: (err) => console.log(err)
+			});
+
+			// 场景三
+			// subscription.unsubscribe();
+
+			// 总结tear down清理函数的作用就是释放资源，避免内存泄漏；其运行时机是subscription在complete()、error()、unsubscribe()的时候会自动运行
+		</script>
+	</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script src="./rxjs.js"></script>
+		<script>
+			const { from, filter, Observable } = rxjs;
+			// 发出 (1,2,3,4,5)
+			const source = from([1, 2, 3, 4, 5]);
+
+			// 过滤掉奇数
+			const example = source.pipe(filter((num) => num % 2 === 0));
+			// 输出: "Even number: 2", "Even number: 4"
+			const subscribe = example.subscribe({
+				next: (val) => console.log(`Filter: ${val}`),
+				complete: () => console.log('Filter Complete')
+			});
+
+			// 自己实现的filter
+			const myFilter = function (select) {
+				return function (preObservable) {
+					const nextObservable = new Observable((subscriber) => {
+						preObservable.subscribe({
+							next: (value) => {
+								if (select(value)) {
+									subscriber.next(value);
+								}
+							},
+							complete: () => {
+								subscriber.complete();
+							},
+							error: (err) => {
+								subscriber.error(err);
+							}
+						});
+					});
+
+					return nextObservable;
+				};
+			};
+
+			source.pipe(myFilter((num) => num % 2 === 0)).subscribe({
+				next: (val) => console.log(`MyFilter: ${val}`),
+				complete: () => console.log('MyFilter Complete')
+			});
+		</script>
+	</body>
+</html>

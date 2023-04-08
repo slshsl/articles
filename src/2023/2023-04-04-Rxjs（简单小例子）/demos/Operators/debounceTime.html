@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<input id="hello" />
+		<script src="./rxjs.js"></script>
+		<script>
+			const { fromEvent, timer, map, debounceTime, Observable } = rxjs;
+
+			const input = document.getElementById('hello');
+
+			// 对于每次键盘敲击，都将映射成当前输入值
+			fromEvent(input, 'keyup')
+				.pipe(
+					map((i) => i.currentTarget.value),
+					// 舍弃掉在两次输出之间小于指定时间的发出值
+					debounceTime(500)
+				)
+				.subscribe((val) => {
+					console.log(`Debounced Input: ${val}`);
+				});
+
+			// 自己实现的debounceTime
+			const myDebounceTime = function (dueTime) {
+				return function (preObservable) {
+					const nextObservable = new Observable((subscriber) => {
+						let timeOutId;
+						preObservable.subscribe({
+							next: (value) => {
+								if (timeOutId) {
+									clearTimeout(timeOutId);
+								}
+								timeOutId = setTimeout(() => {
+									subscriber.next(value);
+								}, dueTime);
+							},
+							complete: () => {
+								subscriber.complete();
+							},
+							error: (err) => {
+								subscriber.error(err);
+							}
+						});
+						return () => {
+							clearTimeout(timeOutId);
+						};
+					});
+
+					return nextObservable;
+				};
+			};
+
+			fromEvent(input, 'keyup')
+				.pipe(
+					map((i) => i.currentTarget.value),
+					myDebounceTime(5000)
+				)
+				.subscribe((val) => {
+					console.log(`My Debounced Input: ${val}`);
+				});
+		</script>
+	</body>
+</html>

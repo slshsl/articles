@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script src="./rxjs.js"></script>
+		<script>
+			const { of, Observable } = rxjs;
+
+			of(1, 2, 3).subscribe({
+				next: (value) => console.log(value),
+				complete: () => console.log('Complete')
+			});
+
+			// 自己实现的of
+			const myOf = function (...args) {
+				return new Observable((subscriber) => {
+					const length = args.length;
+					for (let index = 0; index < length; index++) {
+						subscriber.next(args[index]);
+					}
+					subscriber.complete();
+				});
+			};
+
+			myOf(1, 2, 3).subscribe({
+				next: (value) => console.log(value),
+				complete: () => console.log('Complete')
+			});
+		</script>
+	</body>
+</html>

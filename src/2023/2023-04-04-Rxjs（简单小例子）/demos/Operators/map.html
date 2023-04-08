@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script src="./rxjs.js"></script>
+		<script>
+			const { from, map, Observable } = rxjs;
+			// 发出 (1,2,3,4,5)
+			const source = from([1, 2, 3, 4, 5]);
+
+			source.pipe(map((val) => val + 10)).subscribe({
+				next: (val) => console.log(`Map: ${val}`),
+				complete: () => console.log('Map Complete')
+			});
+
+			// 自己实现的map
+			const myMap = function (project) {
+				return function (preObservable) {
+					const nextObservable = new Observable((subscriber) => {
+						preObservable.subscribe({
+							next: (value) => {
+								subscriber.next(project(value));
+							},
+							complete: () => {
+								subscriber.complete();
+							},
+							error: (err) => {
+								subscriber.error(err);
+							}
+						});
+					});
+
+					return nextObservable;
+				};
+			};
+
+			source.pipe(myMap((val) => val + 10)).subscribe({
+				next: (val) => console.log(`MyMap: ${val}`),
+				complete: () => console.log('MyMap Complete')
+			});
+		</script>
+	</body>
+</html>
