@@ -8,14 +8,11 @@ import {
 } from './util/index';
 import ReactECharts from 'echarts-for-react';
 import { fromEvent, Subscription, timer, merge } from 'rxjs';
-import {
-	concatMap,
-	endWith,
-	map,
-	startWith,
-	switchMap,
-	take
-} from 'rxjs/operators';
+import { concatMap, map, startWith, switchMap, take } from 'rxjs/operators';
+
+import { createOperatorSubscriber } from 'rxjs/internal/operators/OperatorSubscriber';
+
+import { operate } from 'rxjs/internal/util/lift';
 
 function App() {
 	const initBarBtn = useRef<HTMLButtonElement>();

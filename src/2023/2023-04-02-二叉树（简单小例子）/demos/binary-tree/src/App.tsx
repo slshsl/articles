@@ -2,7 +2,7 @@ import { useMemo, useState, useEffect, useRef } from 'react';
 import { random, initNodeArr, nodeArrToTree } from './util/index';
 import ReactECharts from 'echarts-for-react';
 import { fromEvent, Subscription, timer, merge } from 'rxjs';
-import { map, scan, startWith, switchMap, take, tap } from 'rxjs/operators';
+import { map, scan, startWith, switchMap, take } from 'rxjs/operators';
 
 function App() {
 	const initBarBtn = useRef<HTMLButtonElement>();

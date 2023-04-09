@@ -4,6 +4,8 @@ import { isFunction } from './isFunction.js';
 import { isSubscription } from './Subscription.js';
 import { pipeFromArray } from './pipe.js';
 
+//  A representation of any set of values over any amount of time. This is the most basic building block of RxJS.
+// Observable用来描述在任何时间的值得集合
 export class Observable {
 	source;
 	operator;
