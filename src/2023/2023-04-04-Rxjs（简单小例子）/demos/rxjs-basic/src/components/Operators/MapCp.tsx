@@ -1,11 +1,22 @@
 import { useEffect, useRef } from 'react';
-import { Observable, from, fromEvent, interval, take, tap } from 'rxjs';
+import {
+	Observable,
+	Subscriber,
+	from,
+	fromEvent,
+	interval,
+	map,
+	take,
+	tap
+} from 'rxjs';
 
 import { createOperatorSubscriber } from 'rxjs/internal/operators/OperatorSubscriber';
 
 import { operate } from 'rxjs/internal/util/lift';
 
 function MapCp() {
+	const a: object = {};
+	console.log(a);
 	const btnRef = useRef<HTMLButtonElement>(null);
 	useEffect(() => {
 		const fromEventSubscription = fromEvent(btnRef.current!, 'click')
@@ -23,38 +34,45 @@ function MapCp() {
 
 				// 自己实现的map
 				const myMap = function (project: (...args: any[]) => any) {
-					// return function (preObservable: Observable<any>) {
-					// 	const operator = function (
-					// 		this: Subscriber<any>,
-					// 		source: Observable<any>
-					// 	) {
-					// 		const init = function (
-					// 			source: Observable<any>,
-					// 			subscriber: Subscriber<any>
-					// 		) {
-					// 			source.subscribe({
-					// 				next: (value) => {
-					// 					subscriber.next(project(value));
-					// 				},
-					// 				complete: () => {
-					// 					subscriber.complete();
-					// 				},
-					// 				error: (err) => {
-					// 					subscriber.error(err);
-					// 				}
-					// 			});
-					// 		};
-					// 		return init(source, this);
-					// 	};
-					// 	return preObservable.lift(operator);
+					// 第一种方式
+					// return operate((source, subscriber) => {
+					// 	source.subscribe(
+					// 		createOperatorSubscriber(subscriber, (value) => {
+					// 			subscriber.next(project(value));
+					// 		})
+					// 	);
+					// });
+					// 第二种方式
+					// return function (source: Observable<any>) {
+					// 	const newObservable = new Observable((subscriber) => {
+					// 		source.subscribe(
+					// 			createOperatorSubscriber(subscriber, (value: any) => {
+					// 				subscriber.next(project(value));
+					// 			})
+					// 		);
+					// 	});
+					// 	return newObservable;
 					// };
-					return function (preObservable: Observable<any>) {
+					// 第三种方式
+					// return function (source: Observable<any>) {
+					// 	const newObservable = new Observable((subscriber) => {
+					// 		const subscription = source.subscribe((value: any) => {
+					// 			subscriber.next(project(value));
+					// 		});
+					// 		subscriber.add(subscription);
+					// 	});
+					// 	return newObservable;
+					// };
+					// 第四种方式
+					return function (source: Observable<any>) {
 						const newObservable = new Observable((subscriber) => {
-							preObservable.subscribe(
-								createOperatorSubscriber(subscriber, (value: any) => {
-									subscriber.next(project(value));
-								})
-							);
+							const subscription = source.subscribe((value: any) => {
+								subscriber.next(project(value));
+							});
+							return subscription;
+							// return () => {
+							// 	subscription.unsubscribe();
+							// };
 						});
 						return newObservable;
 					};

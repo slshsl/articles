@@ -23,6 +23,7 @@ import SwitchMapCp from './components/Operators/FlatteningOperators/SwitchMapCp'
 import MergeMapCp from './components/Operators/FlatteningOperators/MergeMapCp';
 import SubjectCp from './components/Subject/SubjectCp';
 import BehaviorSubjectCp from './components/Subject/BehaviorSubjectCp';
+import SchedulerCp from './components/Scheduler/SchedulerCp';
 
 function App() {
 	return (
@@ -69,6 +70,10 @@ function App() {
 				<p>Subject</p>
 				<SubjectCp></SubjectCp>
 				<BehaviorSubjectCp></BehaviorSubjectCp>
+			</div>
+			<div>
+				<p>Scheduler</p>
+				<SchedulerCp></SchedulerCp>
 			</div>
 		</div>
 	);
