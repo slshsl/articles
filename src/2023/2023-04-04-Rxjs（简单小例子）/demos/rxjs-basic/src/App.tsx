@@ -23,7 +23,13 @@ import SwitchMapCp from './components/Operators/FlatteningOperators/SwitchMapCp'
 import MergeMapCp from './components/Operators/FlatteningOperators/MergeMapCp';
 import SubjectCp from './components/Subject/SubjectCp';
 import BehaviorSubjectCp from './components/Subject/BehaviorSubjectCp';
-import SchedulerCp from './components/Scheduler/SchedulerCp';
+import AsyncSchedulerCp from './components/Scheduler/AsyncSchedulerCp';
+import QueueSchedulerCp from './components/Scheduler/QueueSchedulerCp';
+import AsapSchedulerCp from './components/Scheduler/AsapSchedulerCp';
+import AnimationFrameSchedulerCp from './components/Scheduler/AnimationFrameSchedulerCp';
+import BindCallbackCp from './components/Creation/BindCallbackCp';
+import DeferCp from './components/Creation/DeferCp';
+import FromEventPatternCp from './components/Creation/FromEventPatternCp';
 
 function App() {
 	return (
@@ -37,12 +43,15 @@ function App() {
 				<IntervalCp></IntervalCp>
 				<FromCp></FromCp>
 				<FromEventCp></FromEventCp>
+				<FromEventPatternCp></FromEventPatternCp>
 				<ForkJoinCp></ForkJoinCp>
 				<EmptyCp></EmptyCp>
 				<TimerCp></TimerCp>
 				<ColdObservableCp></ColdObservableCp>
 				<HotObservableCp></HotObservableCp>
 				<ConcatCp></ConcatCp>
+				<BindCallbackCp></BindCallbackCp>
+				<DeferCp></DeferCp>
 			</div>
 			<div>
 				<p>Operators</p>
@@ -73,7 +82,10 @@ function App() {
 			</div>
 			<div>
 				<p>Scheduler</p>
-				<SchedulerCp></SchedulerCp>
+				<AsyncSchedulerCp></AsyncSchedulerCp>
+				<QueueSchedulerCp></QueueSchedulerCp>
+				<AsapSchedulerCp></AsapSchedulerCp>
+				<AnimationFrameSchedulerCp></AnimationFrameSchedulerCp>
 			</div>
 		</div>
 	);

@@ -62,7 +62,7 @@ function ForkJoinCp() {
 				// B teardown
 
 				// 对于forkJoin中发生错误，如果发生错误的observable没有处理，那么会在forkJoin中抛出，并且next中不会运行
-				// 且会对所有的obeservable之情清理函数
+				// 且会对所有的obeservable执行清理函数
 
 				forkJoin([a$, b$.pipe(catchError((error) => of(error)))]).subscribe({
 					next: (value) => console.log(value),

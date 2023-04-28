@@ -9,17 +9,17 @@ function FromCp() {
 			.subscribe(() => {
 				/**测试学习代码*/
 
-				// 接受一个可迭代对象
-				from([1, 2, 3]).subscribe({
-					next: (value) => console.log(value),
-					complete: () => console.log('Complete')
-				});
+				// // 接受一个可迭代对象
+				// from([1, 2, 3]).subscribe({
+				// 	next: (value) => console.log(value),
+				// 	complete: () => console.log('Complete')
+				// });
 
-				// 接受一个promise
-				from(Promise.resolve(1)).subscribe({
-					next: (value) => console.log(value),
-					complete: () => console.log('Complete')
-				});
+				// // 接受一个promise
+				// from(Promise.resolve(1)).subscribe({
+				// 	next: (value) => console.log(value),
+				// 	complete: () => console.log('Complete')
+				// });
 
 				// 自己实现的from
 				const myFrom = function (iteratorableObj: any) {
@@ -41,8 +41,8 @@ function FromCp() {
 						} else {
 							for (const iterator of iteratorableObj) {
 								subscriber.next(iterator);
-								subscriber.complete();
 							}
+							subscriber.complete();
 						}
 					});
 				};

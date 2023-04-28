@@ -9,12 +9,17 @@ function TearDownCp() {
 			.subscribe(() => {
 				/**测试学习代码*/
 
-				const observable$ = new Observable<string>((subscriber) => {
-					subscriber.next('A');
-					subscriber.next('B');
+				const observable$ = new Observable<number>((subscriber) => {
+					let counter = 1;
+					const intervalId = setInterval(() => {
+						console.log('Emitted', counter);
+						subscriber.next(counter++);
 
-					// 场景一
-					subscriber.complete();
+						// 场景一
+						if (counter === 10) {
+							subscriber.complete();
+						}
+					}, 2000);
 
 					// 场景二
 					// subscriber.error(new Error('Failure'));
@@ -25,11 +30,16 @@ function TearDownCp() {
 					// 场景三：当订阅被取消之后运行
 					return () => {
 						console.log('tear down');
+						clearInterval(intervalId);
 					};
 				});
 
 				const subscription = observable$.subscribe({
-					next: (value: string) => console.log(value),
+					next: (value: number) => {
+						console.log(value);
+						// 该内部报错不会调用清理函数
+						// throw new Error('Failure');
+					},
 					complete: () => console.log('Completed'),
 					error: (err) => console.log(err)
 				});
